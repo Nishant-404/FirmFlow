@@ -1,15 +1,20 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
-from sqlalchemy.orm import Session
 
-DATABASE_URL = "postgresql://postgres:password@localhost:5432/firmflow"
+DATABASE_URL = "sqlite:///./firmflow.db"
 
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}
+)
+
+SessionLocal = sessionmaker(
+    autocommit=False,
+    autoflush=False,
+    bind=engine
+)
+
 Base = declarative_base()
-
-
-
 
 def get_db():
     db = SessionLocal()
